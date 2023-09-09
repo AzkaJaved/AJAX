@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="button">Load Github Users</button>
+    <h1>Github Users</h1>
+    <p id="users"></p>
+    <script>
+        document.getElementById('button').addEventListener('click',loadUsers);
+        function loadUsers(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','https://api.github.com/users',true)
+            xhr.onload = function(){
+                if(xhr.status==200){
+                    var users = JSON.parse(xhr.responseText);
+                    // console.log(data);
+                    var output = '';
+                    for(i in users){
+                        output += '<img src="'+users[i].avatar_url+'" width="70px",height="70px">'+'<p>'+ users[i].id+ '</p>';
+                    }
+                    document.getElementById('users').innerHTML = output;
+                }
+            }
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
